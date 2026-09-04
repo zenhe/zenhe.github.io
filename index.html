@@ -57,12 +57,16 @@ nav div {
     gap: 25px;
 }
 
-nav a {
+nav button {
     color: #aaa;
-    text-decoration: none;
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    font-size: 15px;
+    cursor: pointer;
 }
 
-nav a:hover {
+nav button:hover {
     color: white;
 }
 
@@ -310,11 +314,11 @@ footer {
     <nav>
         <span class="logo">He<span class="dot">.</span></span>
 
-        <div>
-            #homeHome</a>
-            #galleryGallery</a>
-            #aboutAbout</a>
-        </div>
+<div>
+    <button onclick="location.hash='home'">Home</button>
+    <button onclick="location.hash='gallery'">Gallery</button>
+    <button onclick="location.hash='about'">About</button>
+</div>
     </nav>
 
     <section class="top-grid" id="home">
