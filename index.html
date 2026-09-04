@@ -150,6 +150,13 @@ nav button:hover {
     background: linear-gradient(135deg, #f0c989, #906d72);
     display: grid;
     place-items: center;
+    overflow: hidden;
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .placeholder {
@@ -220,30 +227,22 @@ nav button:hover {
     background: linear-gradient(135deg, #d7c2a3, #8797a5);
     cursor: pointer;
     transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.photo:hover img {
+    transform: scale(1.1);
 }
 
 .photo:hover {
     transform: scale(1.05);
-}
-
-.photo:nth-child(2) {
-    background: linear-gradient(135deg, #bab0c9, #667e91);
-}
-
-.photo:nth-child(3) {
-    background: linear-gradient(135deg, #a9bb9e, #3f6651);
-}
-
-.photo:nth-child(4) {
-    background: linear-gradient(135deg, #7d9aac, #314b67);
-}
-
-.photo:nth-child(5) {
-    background: linear-gradient(135deg, #d6a66b, #804c32);
-}
-
-.photo:nth-child(6) {
-    background: linear-gradient(135deg, #d5b4a5, #755b72);
 }
 
 .side {
@@ -401,30 +400,8 @@ footer {
                 <button onclick="filterPhotos('furry-friends')">Furry Friends</button>
             </div>
 
-            <div class="photo-grid">
-                <div class="photo" data-category="portraits" onclick="openPhoto(this)">
-                    <span class="placeholder">Photo 1</span>
-                </div>
-
-                <div class="photo" data-category="street" onclick="openPhoto(this)">
-                    <span class="placeholder">Photo 2</span>
-                </div>
-
-                <div class="photo" data-category="urban" onclick="openPhoto(this)">
-                    <span class="placeholder">Photo 3</span>
-                </div>
-
-                <div class="photo" data-category="landscapes" onclick="openPhoto(this)">
-                    <span class="placeholder">Photo 4</span>
-                </div>
-
-                <div class="photo" data-category="travel" onclick="openPhoto(this)">
-                    <span class="placeholder">Photo 5</span>
-                </div>
-
-                <div class="photo" data-category="furry-friends" onclick="openPhoto(this)">
-                    <span class="placeholder">Photo 6</span>
-                </div>
+            <div class="photo-grid" id="photoGrid">
+                <!-- Photos will be loaded here by JavaScript -->
             </div>
         </div>
 
@@ -475,27 +452,60 @@ footer {
 </div>
 
 <script>
-function filterPhotos(category) {
-    const photos = document.querySelectorAll('.photo');
-    const buttons = document.querySelectorAll('.filters button');
+let allPhotos = [];
+let currentFilter = 'all';
+
+// Load photos from photos.json
+async function loadPhotos() {
+    try {
+        const response = await fetch('photos.json');
+        const data = await response.json();
+        allPhotos = data.photos;
+        displayPhotos('all');
+    } catch (error) {
+        console.error('Error loading photos:', error);
+    }
+}
+
+// Display photos based on filter
+function displayPhotos(category) {
+    const photoGrid = document.getElementById('photoGrid');
+    photoGrid.innerHTML = '';
     
-    // Update active button
-    buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    let filteredPhotos = category === 'all' ? allPhotos : allPhotos.filter(photo => photo.category === category);
     
-    // Filter photos
-    photos.forEach(photo => {
-        if (category === 'all' || photo.dataset.category === category) {
-            photo.style.display = 'grid';
-        } else {
-            photo.style.display = 'none';
-        }
+    filteredPhotos.forEach(photo => {
+        const photoDiv = document.createElement('div');
+        photoDiv.className = 'photo';
+        photoDiv.setAttribute('data-category', photo.category);
+        photoDiv.onclick = () => openPhoto(photo);
+        
+        const img = document.createElement('img');
+        img.src = photo.path;
+        img.alt = photo.title;
+        
+        photoDiv.appendChild(img);
+        photoGrid.appendChild(photoDiv);
     });
 }
 
-function openPhoto(element) {
-    alert('Photo clicked! You can add lightbox/modal functionality here.');
+// Filter photos
+function filterPhotos(category) {
+    currentFilter = category;
+    const buttons = document.querySelectorAll('.filters button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    displayPhotos(category);
 }
+
+// Open photo (placeholder for future lightbox functionality)
+function openPhoto(photo) {
+    console.log('Opened:', photo.title);
+    // Add lightbox functionality here later
+}
+
+// Load photos when page loads
+document.addEventListener('DOMContentLoaded', loadPhotos);
 </script>
 </body>
 </html>
