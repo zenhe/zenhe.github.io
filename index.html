@@ -495,7 +495,7 @@ async function loadPhotos() {
     try {
         const response = await fetch('photos.json');
         const data = await response.json();
-        allPhotos = data.photos;
+        allPhotos = [...data.photos].sort(() => Math.random() - 0.5);
         updatePhotoCount();
         displayPhotos('all');
     } catch (error) {
