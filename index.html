@@ -1,385 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>He. | Photography Portfolio</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<style>
+:root {
+    --background: #0b0b0d;
+    --card: #f8f5ee;
+    --text: #17171a;
+    --muted: #6b6870;
+    --accent: #edae35;
+}
 
-    <meta
-        name="description"
-        content="He. Photography Portfolio"
-    >
+* {
+    box-sizing: border-box;
+}
 
-    <title>He. | Photography Portfolio</title>
+html {
+    scroll-behavior: smooth;
+}
 
-    <style>
-        /* ==============================
-           BASIC SETTINGS
-        ============================== */
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-        :root {
-            --background: #0b0b0d;
-            --card: #f8f5ee;
-            --card-secondary: #fffaf0;
-            --text: #161619;
-            --muted: #69676b;
-            --accent: #edae35;
-            --line: rgba(22, 22, 25, 0.14);
-            --shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
-            --radius-large: 28px;
-            --radius-medium: 20px;
-        }
+.container {
+    width: min(1400px, calc(100% - 40px));
+    margin: auto;
+    padding: 20px 0;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+nav {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
 
-        body {
-            background: var(--background);
-            color: var(--text);
-            font-family:
-                Inter,
-                Avenir,
-                "Segoe UI",
-                Helvetica,
-                Arial,
-                sans-serif;
-            line-height: 1.5;
-            min-height: 100vh;
-            transition:
-                background 0.3s ease,
-                color 0.3s ease;
-        }
+.dot {
+    color: var(--accent);
+}
 
-        button,
-        a {
-            font: inherit;
-        }
+nav div {
+    display: flex;
+    gap: 25px;
+}
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+nav a {
+    color: #aaa;
+    text-decoration: none;
+}
 
-        button {
-            border: none;
-            cursor: pointer;
-        }
+nav a:hover {
+    color: white;
+}
 
-        /* ==============================
-           MAIN LAYOUT
-        ============================== */
+.card {
+    background: var(--card);
+    border-radius: 28px;
+    overflow: hidden;
+}
 
-        .page-container {
-            width: min(1440px, calc(100% - 48px));
-            margin: 0 auto;
-            padding: 24px 0 30px;
-        }
+.top-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 18px;
+}
 
-        .card {
-            background: var(--card);
-            border-radius: var(--radius-large);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
+.hero {
+    min-height: 400px;
+    padding: 55px;
+    display: flex;
+    align-items: center;
+    background:
+        linear-gradient(90deg, #f8f5ee 0%, #f8f5eedd 48%, transparent),
+        linear-gradient(135deg, #ddd2c5, #747c8c);
+}
 
-        /* ==============================
-           NAVIGATION
-        ============================== */
+.small-title {
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 11px;
+    color: var(--muted);
+}
 
-        .navigation {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 58px;
-            margin-bottom: 18px;
-            color: #f7f4ed;
-        }
+.hero h1 {
+    font-size: 110px;
+    line-height: 0.85;
+    margin: 25px 0;
+    letter-spacing: -8px;
+}
 
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
+.hero-text {
+    font-size: 27px;
+    margin-bottom: 30px;
+}
 
-        .logo-dot {
-            color: var(--accent);
-        }
+.button {
+    display: inline-block;
+    padding: 14px 24px;
+    margin-right: 8px;
+    border: 1px solid #17171a;
+    border-radius: 30px;
+    color: #17171a;
+    text-decoration: none;
+}
 
-        .navigation-links {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+.button-dark {
+    background: #17171a;
+    color: white;
+}
 
-        .navigation-links a {
-            color: #97979e;
-            padding: 10px 18px;
-            border-radius: 999px;
-            font-size: 14px;
-            transition:
-                background 0.25s ease,
-                color 0.25s ease;
-        }
+.featured {
+    padding: 30px;
+    background: #fff7e7;
+}
 
-        .navigation-links a:hover,
-        .navigation-links a.active {
-            background: #f5f1e8;
-            color: #17171a;
-        }
+.featured h2 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
 
-        .theme-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 15px;
-            border-radius: 999px;
-            background: #f5f1e8;
-            color: #17171a;
-            box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-        }
+.featured-image {
+    height: 235px;
+    margin-top: 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #f0c989, #906d72);
+    display: grid;
+    place-items: center;
+}
 
-        .theme-button span:first-child {
-            color: var(--accent);
-        }
+.placeholder {
+    padding: 10px 15px;
+    border-radius: 20px;
+    background: #ffffffcc;
+    font-size: 13px;
+}
 
-        /* ==============================
-           TOP GRID
-        ============================== */
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+}
 
-        .top-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 2.5fr) minmax(280px, 1fr);
-            gap: 18px;
-            margin-bottom: 18px;
-        }
+.gallery {
+    padding: 25px;
+}
 
-        /* ==============================
-           HERO
-        ============================== */
+.gallery h2 {
+    margin-top: 0;
+}
 
-        .hero {
-            min-height: 385px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 52px 58px;
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(252, 247, 236, 0.98) 0%,
-                    rgba(252, 247, 236, 0.92) 36%,
-                    rgba(252, 247, 236, 0.18) 72%,
-                    rgba(252, 247, 236, 0.05) 100%
-                ),
-                linear-gradient(
-                    135deg,
-                    #e8ddd0 0%,
-                    #d9c4c2 44%,
-                    #8d96a8 70%,
-                    #474a51 100%
-                );
-        }
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 470px;
-        }
+.filters button {
+    border: 0;
+    padding: 9px 18px;
+    border-radius: 25px;
+    background: #e9e3da;
+}
 
-        .eyebrow {
-            margin-bottom: 18px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #57545a;
-        }
+.filters button:first-child {
+    background: #17171a;
+    color: white;
+}
 
-        .hero h1 {
-            font-size: clamp(72px, 10vw, 128px);
-            line-height: 0.85;
-            letter-spacing: -8px;
-            margin-bottom: 26px;
-        }
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
 
-        .hero h1 span {
-            color: var(--accent);
-        }
+.photo {
+    height: 170px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #d7c2a3, #8797a5);
+}
 
-        .hero-description {
-            max-width: 360px;
-            font-size: clamp(20px, 2.1vw, 30px);
-            line-height: 1.16;
-            letter-spacing: -1px;
-            margin-bottom: 30px;
-        }
+.photo:nth-child(2) {
+    background: linear-gradient(135deg, #bab0c9, #667e91);
+}
 
-        .hero-photo-label {
-            position: absolute;
-            right: 28px;
-            bottom: 26px;
-            z-index: 2;
-            color: rgba(255, 255, 255, 0.95);
-            background: rgba(0, 0, 0, 0.62);
-            backdrop-filter: blur(8px);
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 12px;
-        }
+.photo:nth-child(3) {
+    background: linear-gradient(135deg, #a9bb9e, #3f6651);
+}
 
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+.photo:nth-child(4) {
+    background: linear-gradient(135deg, #7d9aac, #314b67);
+}
 
-        .button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            min-height: 48px;
-            padding: 12px 25px;
-            border-radius: 999px;
-            border: 1px solid #1a191d;
-            font-size: 14px;
-            font-weight: 600;
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
-        }
+.photo:nth-child(5) {
+    background: linear-gradient(135deg, #d6a66b, #804c32);
+}
 
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
-        }
+.photo:nth-child(6) {
+    background: linear-gradient(135deg, #d5b4a5, #755b72);
+}
 
-        .button-dark {
-            background: #151519;
-            color: #fff;
-        }
+.side {
+    display: grid;
+    gap: 18px;
+}
 
-        .button-light {
-            background: rgba(255, 255, 255, 0.45);
-            color: #17171a;
-        }
+.about,
+.stats,
+.quote {
+    padding: 28px;
+}
 
-        /* ==============================
-           FEATURED CARD
-        ============================== */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
 
-        .featured {
-            min-height: 385px;
-            padding: 30px 28px 24px;
-            display: flex;
-            flex-direction: column;
-            background:
-                radial-gradient(
-                    circle at top right,
-                    rgba(255, 217, 139, 0.7),
-                    transparent 45%
-                ),
-                #fff9ec;
-        }
+.number {
+    font-size: 30px;
+    font-weight: bold;
+}
 
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+.label {
+    color: var(--muted);
+}
 
-        .star {
-            color: var(--accent);
-            font-size: 18px;
-        }
+.about h2 {
+    margin-top: 0;
+}
 
-        .featured h2 {
-            font-size: 29px;
-            letter-spacing: -1px;
-            margin-bottom: 3px;
-        }
+.about p {
+    color: var(--muted);
+}
 
-        .featured-description {
-            color: var(--muted);
-            margin-bottom: 18px;
-        }
+.quote {
+    background: linear-gradient(135deg, #292834, #746c72);
+    color: white;
+}
 
-        .featured-image {
-            position: relative;
-            flex: 1;
-            min-height: 215px;
-            border-radius: 21px;
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255, 196, 97, 0.65),
-                    rgba(123, 87, 91, 0.4)
-                ),
-                #d9ba89;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(35, 30, 25, 0.7);
-            border: 1px dashed rgba(35, 30, 25, 0.25);
-            overflow: hidden;
-        }
+.quote p {
+    font-size: 18px;
+}
 
-        .image-placeholder-text {
-            padding: 12px 16px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.76);
-            backdrop-filter: blur(8px);
-            font-size: 13px;
-            font-weight: 700;
-            text-align: center;
-        }
+footer {
+    padding: 28px 5px 10px;
+    color: #888;
+    font-size: 12px;
+}
 
-        .round-button {
-            position: absolute;
-            right: 16px;
-            bottom: 16px;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #fff;
-            color: #111;
-            display: grid;
-            place-items: center;
-            font-size: 19px;
-            transition: transform 0.2s ease;
-        }
+@media (max-width: 850px) {
+    .top-grid,
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
 
-        .round-button:hover {
-            transform: translateX(3px);
-        }
+    .hero {
+        padding: 35px;
+    }
 
-        /* ==============================
-           CONTENT GRID
-        ============================== */
+    .hero h1 {
+        font-size: 80px;
+    }
 
-        .content-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 2.2fr) minmax(340px, 1fr);
-            gap: 18px;
-        }
+    .photo-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 
-        /* ==============================
-           GALLERY
-        ============================== */
+    nav div {
+        gap: 12px;
+    }
+}
 
-        .gallery-section {
-            
+@media (max-width: 500px) {
+    .container {
+        width: calc(100% - 20px);
+    }
+
+    nav div {
+        display: none;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <nav>
+        <span class="logo">He<span class="dot">.</span></span>
+
+        <div>
+            #homeHome</a>
+            #galleryGallery</a>
+            #aboutAbout</a>
+        </div>
+    </nav>
+
+    <section class="top-grid" id="home">
+
+        <div class="hero card">
+            <div>
+                <p class="small-title">Photography Portfolio</p>
+
+                <h1>He<span class="dot">.</span></h1>
+
+                <p class="hero-text">
+                    Capturing moments,<br>
+                    one frame at a time.
+                </p>
+
+                #gallery
+                    View Gallery
+                </a>
+
+                #about
+                    Explore
+                </a>
+            </div>
+        </div>
+
+        <div class="featured card">
+            <p>✦ Featured</p>
+
+            <h2>Golden Hour</h2>
+
+            <p>The best light, the best stories.</p>
+
+            <div class="featured-image">
+                <span class="placeholder">
+                    Featured image placeholder
+                </span>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="bottom-grid">
+
+        <div class="gallery card" id="gallery">
+            <h2>▦ Gallery →</h2>
+
+            <div class="filters">
+                <button>All</button>
+                <button>Landscapes</button>
+                <button>Travel</button>
+                <button>Nature</button>
+                <button>City</button>
+                <button>Food</button>
+            </div>
+
+            <div class="photo-grid">
+                <div class="photo">
+                    <span class="placeholder">Photo 1</span>
+                </div>
+
+                <div class="photo">
+                    <span class="placeholder">Photo 2</span>
+                </div>
+
+                <div class="photo">
+                    <span class="placeholder">Photo 3</span>
+                </div>
+
+                <div class="photo">
+                    <span class="placeholder">Photo 4</span>
+                </div>
+
+                <div class="photo">
+                    <span class="placeholder">Photo 5</span>
+                </div>
+
+                <div class="photo">
+                    <span class="placeholder">Photo 6</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="side">
+
+            <div class="stats card">
+                <div>
+                    <div class="number">120+</div>
+                    <div class="label">Moments</div>
+                </div>
+
+                <div>
+                    <div class="number">10+</div>
+                    <div class="label">Locations</div>
+                </div>
+            </div>
+
+            <div class="about card" id="about">
+                <h2>About</h2>
+
+                <h3>Finding beauty in the ordinary.</h3>
+
+                <p>
+                    Landscapes, nature, cities and the little
+                    details that make life interesting.
+                </p>
+
+                #gallery
+                    View Gallery →
+                </a>
+            </div>
+
+            <div class="quote card">
+                <p>
+                    “Sometimes the best photos aren't planned.”
+                </p>
+
+                <strong>He.</strong>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        © 2026 He. All rights reserved.
+    </footer>
+
+</div>
+</body>
+</html>
