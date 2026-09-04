@@ -64,6 +64,7 @@ nav button {
     padding: 8px 12px;
     font-size: 15px;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 nav button:hover {
@@ -191,7 +192,7 @@ nav button:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .filters button {
@@ -201,6 +202,7 @@ nav button:hover {
     background: #e9e3da;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 14px;
 }
 
 .filters button:hover {
@@ -213,21 +215,21 @@ nav button:hover {
     color: white;
 }
 
+/* Masonry Gallery Styles */
 .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    grid-auto-rows: 250px;
 }
 
 .photo {
-    height: 170px;
-    border-radius: 16px;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(135deg, #d7c2a3, #8797a5);
-    cursor: pointer;
-    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 12px;
     overflow: hidden;
+    cursor: pointer;
+    background: #333;
+    transition: all 0.3s ease;
 }
 
 .photo img {
@@ -238,11 +240,48 @@ nav button:hover {
 }
 
 .photo:hover img {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 .photo:hover {
-    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px);
+}
+
+/* Masonry effect - varying sizes */
+.photo:nth-child(1) {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.photo:nth-child(2) {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.photo:nth-child(3) {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.photo:nth-child(4) {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+.photo:nth-child(5) {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.photo:nth-child(6) {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.photo:nth-child(7) {
+    grid-column: span 1;
+    grid-row: span 1;
 }
 
 .side {
@@ -294,6 +333,15 @@ footer {
     font-size: 12px;
 }
 
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        grid-auto-rows: 200px;
+    }
+}
+
 @media (max-width: 850px) {
     .top-grid,
     .bottom-grid {
@@ -309,7 +357,14 @@ footer {
     }
 
     .photo-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 8px;
+        grid-auto-rows: 150px;
+    }
+
+    .photo:nth-child(4) {
+        grid-column: span 1;
+        grid-row: span 1;
     }
 
     nav div {
@@ -327,7 +382,23 @@ footer {
     }
 
     .photo-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        grid-auto-rows: 120px;
+    }
+
+    .photo:nth-child(4) {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .gallery {
+        padding: 15px;
+    }
+
+    .filters button {
+        padding: 7px 14px;
+        font-size: 12px;
     }
 }
 </style>
@@ -409,8 +480,8 @@ footer {
 
             <div class="stats card">
                 <div>
-                    <div class="number">120+</div>
-                    <div class="label">Moments</div>
+                    <div class="number" id="photoCount">0</div>
+                    <div class="label">Photos</div>
                 </div>
 
                 <div>
@@ -461,10 +532,17 @@ async function loadPhotos() {
         const response = await fetch('photos.json');
         const data = await response.json();
         allPhotos = data.photos;
+        updatePhotoCount();
         displayPhotos('all');
     } catch (error) {
         console.error('Error loading photos:', error);
     }
+}
+
+// Update photo count
+function updatePhotoCount() {
+    const photoCount = document.getElementById('photoCount');
+    photoCount.textContent = allPhotos.length + '+';
 }
 
 // Display photos based on filter
@@ -474,15 +552,17 @@ function displayPhotos(category) {
     
     let filteredPhotos = category === 'all' ? allPhotos : allPhotos.filter(photo => photo.category === category);
     
-    filteredPhotos.forEach(photo => {
+    filteredPhotos.forEach((photo, index) => {
         const photoDiv = document.createElement('div');
         photoDiv.className = 'photo';
         photoDiv.setAttribute('data-category', photo.category);
+        photoDiv.style.animationDelay = `${index * 50}ms`;
         photoDiv.onclick = () => openPhoto(photo);
         
         const img = document.createElement('img');
         img.src = photo.path;
         img.alt = photo.title;
+        img.loading = 'lazy';
         
         photoDiv.appendChild(img);
         photoGrid.appendChild(photoDiv);
