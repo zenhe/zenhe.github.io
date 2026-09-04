@@ -119,6 +119,13 @@ nav button:hover {
     border-radius: 30px;
     color: #17171a;
     text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .button-dark {
@@ -165,6 +172,12 @@ nav button:hover {
 
 .gallery h2 {
     margin-top: 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.gallery h2:hover {
+    color: var(--accent);
 }
 
 .filters {
@@ -179,9 +192,16 @@ nav button:hover {
     padding: 9px 18px;
     border-radius: 25px;
     background: #e9e3da;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.filters button:first-child {
+.filters button:hover {
+    background: #d9cfc0;
+    transform: translateY(-2px);
+}
+
+.filters button.active {
     background: #17171a;
     color: white;
 }
@@ -198,6 +218,12 @@ nav button:hover {
     display: grid;
     place-items: center;
     background: linear-gradient(135deg, #d7c2a3, #8797a5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.photo:hover {
+    transform: scale(1.05);
 }
 
 .photo:nth-child(2) {
@@ -363,39 +389,39 @@ footer {
     <section class="bottom-grid">
 
         <div class="gallery card" id="gallery">
-            <h2>▦ Gallery →</h2>
+            <h2 onclick="filterPhotos('all')">▦ Gallery →</h2>
 
             <div class="filters">
-                <button>All</button>
-                <button>Landscapes</button>
-                <button>Travel</button>
-                <button>Nature</button>
-                <button>City</button>
-                <button>Food</button>
+                <button class="active" onclick="filterPhotos('all')">All</button>
+                <button onclick="filterPhotos('landscapes')">Landscapes</button>
+                <button onclick="filterPhotos('travel')">Travel</button>
+                <button onclick="filterPhotos('nature')">Nature</button>
+                <button onclick="filterPhotos('city')">City</button>
+                <button onclick="filterPhotos('food')">Food</button>
             </div>
 
             <div class="photo-grid">
-                <div class="photo">
+                <div class="photo" data-category="landscapes" onclick="openPhoto(this)">
                     <span class="placeholder">Photo 1</span>
                 </div>
 
-                <div class="photo">
+                <div class="photo" data-category="travel" onclick="openPhoto(this)">
                     <span class="placeholder">Photo 2</span>
                 </div>
 
-                <div class="photo">
+                <div class="photo" data-category="nature" onclick="openPhoto(this)">
                     <span class="placeholder">Photo 3</span>
                 </div>
 
-                <div class="photo">
+                <div class="photo" data-category="city" onclick="openPhoto(this)">
                     <span class="placeholder">Photo 4</span>
                 </div>
 
-                <div class="photo">
+                <div class="photo" data-category="food" onclick="openPhoto(this)">
                     <span class="placeholder">Photo 5</span>
                 </div>
 
-                <div class="photo">
+                <div class="photo" data-category="landscapes" onclick="openPhoto(this)">
                     <span class="placeholder">Photo 6</span>
                 </div>
             </div>
@@ -446,5 +472,29 @@ footer {
     </footer>
 
 </div>
+
+<script>
+function filterPhotos(category) {
+    const photos = document.querySelectorAll('.photo');
+    const buttons = document.querySelectorAll('.filters button');
+    
+    // Update active button
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter photos
+    photos.forEach(photo => {
+        if (category === 'all' || photo.dataset.category === category) {
+            photo.style.display = 'grid';
+        } else {
+            photo.style.display = 'none';
+        }
+    });
+}
+
+function openPhoto(element) {
+    alert('Photo clicked! You can add lightbox/modal functionality here.');
+}
+</script>
 </body>
 </html>
