@@ -5,6 +5,7 @@ on:
     paths:
       - 'images/**'
       - 'scripts/generate-photos.js'
+      - '.github/workflows/update-gallery.yml'
   workflow_dispatch:
 
 permissions:
@@ -23,19 +24,22 @@ jobs:
         with:
           node-version: 20
 
-      - name: Generate photos.json
+      - name: Install image optimizer
+        run: npm install sharp --no-save
+
+      - name: Optimise images and update gallery
         run: node scripts/generate-photos.js
 
-      - name: Commit updated photos.json
+      - name: Commit generated files
         run: |
-          if git diff --quiet -- photos.json; then
-            echo "photos.json is already up to date."
+          if git diff --quiet; then
+            echo "Gallery is already up to date."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add photos.json
-          git commit -m "Auto-update photo gallery"
+          git add images photos.json
+          git commit -m "Auto-optimize gallery images"
           git push
