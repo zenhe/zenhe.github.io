@@ -401,6 +401,24 @@ footer { padding: 28px 5px 10px; color: #888; font-size: 12px; }
     }
 }
 </style>
+
+<script>
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+const navigationEntry = performance.getEntriesByType('navigation')[0];
+
+if (navigationEntry?.type === 'reload' && window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+}
+
+window.addEventListener('load', () => {
+    if (navigationEntry?.type === 'reload') {
+        window.scrollTo(0, 0);
+    }
+});
+</script>
 </head>
 
 <body>
