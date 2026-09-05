@@ -1,1 +1,0 @@
-Add your furry friends photos here (.jpg)
