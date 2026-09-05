@@ -6,8 +6,10 @@ const imagesDir = path.join(__dirname, '..', 'images');
 const outputFile = path.join(__dirname, '..', 'photos.json');
 const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
+// Optimised for a photography portfolio:
+// 2000px is enough for large desktop displays while keeping downloads reasonable.
 const MAX_WIDTH = 2000;
-const WEBP_QUALITY = 84;
+const WEBP_QUALITY = 86;
 
 function titleFromFilename(filename) {
   return path
@@ -20,7 +22,6 @@ function titleFromFilename(filename) {
 async function optimiseImage(categoryDir, filename) {
   const extension = path.extname(filename).toLowerCase();
 
-  // Existing WebP files are already website-ready.
   if (extension === '.webp') {
     return filename;
   }
@@ -28,6 +29,11 @@ async function optimiseImage(categoryDir, filename) {
   const inputPath = path.join(categoryDir, filename);
   const outputFilename = `${path.basename(filename, path.extname(filename))}.webp`;
   const outputPath = path.join(categoryDir, outputFilename);
+
+  // Skip conversion when an optimised version already exists.
+  if (fs.existsSync(outputPath)) {
+    return outputFilename;
+  }
 
   await sharp(inputPath)
     .rotate()
@@ -37,10 +43,11 @@ async function optimiseImage(categoryDir, filename) {
       fit: 'inside',
       withoutEnlargement: true
     })
-    .webp({ quality: WEBP_QUALITY })
+    .webp({
+      quality: WEBP_QUALITY,
+      effort: 5
+    })
     .toFile(outputPath);
-
-  fs.unlinkSync(inputPath);
 
   console.log(`Optimised: ${filename} → ${outputFilename}`);
   return outputFilename;
@@ -62,7 +69,10 @@ async function optimiseImages() {
     const files = fs.readdirSync(categoryDir, { withFileTypes: true })
       .filter(entry => entry.isFile())
       .map(entry => entry.name)
-      .filter(filename => imageExtensions.has(path.extname(filename).toLowerCase()));
+      .filter(filename => {
+        const ext = path.extname(filename).toLowerCase();
+        return ext === '.jpg' || ext === '.jpeg' || ext === '.png';
+      });
 
     for (const filename of files) {
       await optimiseImage(categoryDir, filename);
@@ -111,7 +121,7 @@ async function main() {
     'utf8'
   );
 
-  console.log(`Generated photos.json with ${photos.length} photos.`);
+  console.log(`Generated photos.json with ${photos.length} optimised photos.`);
 }
 
 main().catch(error => {
