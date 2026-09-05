@@ -490,12 +490,22 @@ footer {
 let allPhotos = [];
 let currentFilter = 'all';
 
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+}
+    
 // Load photos from photos.json
 async function loadPhotos() {
     try {
         const response = await fetch('photos.json');
         const data = await response.json();
-        allPhotos = [...data.photos].sort(() => Math.random() - 0.5);
+        allPhotos = shuffle([...data.photos]);
         updatePhotoCount();
         displayPhotos('all');
     } catch (error) {
