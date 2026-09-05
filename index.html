@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>He. | Photography Portfolio</title>
+<link rel="stylesheet" href="https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.css">
 
 <style>
 :root {
@@ -17,7 +18,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--background); color: var(--text); font-family: Arial, Helvetica, sans-serif; }
-body.lightbox-open { overflow: hidden; }
 .container { width: min(1400px, calc(100% - 40px)); margin: auto; padding: 20px 0; }
 nav { height: 60px; display: flex; align-items: center; justify-content: space-between; color: white; }
 .logo { font-size: 28px; font-weight: bold; }
@@ -63,147 +63,80 @@ nav button:hover { color: white; }
 .quote p { font-size: 18px; }
 footer { padding: 28px 5px 10px; color: #888; font-size: 12px; }
 
-/* Lightbox */
-.lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: grid;
-    place-items: center;
-    padding: 40px;
+/* PhotoSwipe custom styling */
+.zen-pswp .pswp__bg {
     background: rgba(8, 8, 10, 0.94);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.lightbox.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.lightbox-content {
-    position: relative;
-    width: min(1200px, 90vw);
-    height: min(88vh, 900px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.lightbox-image {
-    max-width: 100%;
-    max-height: 82vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+.zen-pswp .pswp__img {
     border-radius: 8px;
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
-    opacity: 0;
-    transform: scale(0.96);
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.lightbox.open .lightbox-image {
+.zen-pswp {
+    --pswp-icon-color: rgba(255, 255, 255, 0.92);
+    --pswp-icon-color-secondary: rgba(255, 255, 255, 0.45);
+    --pswp-icon-stroke-width: 1.5;
+}
+
+.zen-pswp .pswp__button {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.zen-pswp .pswp__button:hover {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1.06);
 }
 
-.lightbox-close,
-.lightbox-prev,
-.lightbox-next {
-    position: absolute;
-    z-index: 2;
-    width: 46px;
-    height: 46px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    color: white;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    font-size: 22px;
-    line-height: 1;
-    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+.zen-pswp .pswp__counter {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+    letter-spacing: 2px;
 }
 
-.lightbox-close:hover,
-.lightbox-prev:hover,
-.lightbox-next:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: scale(1.05);
-}
-
-.lightbox-close {
-    top: 24px;
-    right: 24px;
-}
-
-.lightbox-prev,
-.lightbox-next {
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.lightbox-prev:hover,
-.lightbox-next:hover {
-    transform: translateY(-50%) scale(1.05);
-}
-
-.lightbox-prev { left: 24px; }
-.lightbox-next { right: 24px; }
-
-.lightbox-info {
+.zen-pswp .pswp__custom-caption {
     position: absolute;
     left: 50%;
-    bottom: 10px;
+    bottom: 24px;
     transform: translateX(-50%);
+    width: auto;
+    max-width: calc(100% - 40px);
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(12, 12, 15, 0.68);
     color: white;
     text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     pointer-events: none;
 }
 
-.lightbox-title {
-    margin: 0 0 5px;
-    font-size: 15px;
+.zen-pswp .pswp__custom-caption strong {
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.3px;
 }
 
-.lightbox-meta {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 12px;
+.zen-pswp .pswp__custom-caption span {
+    margin-left: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-.lightbox-counter {
-    position: absolute;
-    top: 29px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 12px;
-    letter-spacing: 2px;
-}
-
 @media (max-width: 700px) {
-    .lightbox { padding: 20px; }
-    .lightbox-content { width: 100%; height: 90vh; }
-    .lightbox-image { max-width: 94vw; max-height: 78vh; }
-    .lightbox-prev, .lightbox-next { width: 40px; height: 40px; }
-    .lightbox-prev { left: 8px; }
-    .lightbox-next { right: 8px; }
-    .lightbox-close { top: 12px; right: 12px; }
-    .lightbox-counter { top: 18px; }
-    .lightbox-info { bottom: 4px; }
+    .zen-pswp .pswp__custom-caption {
+        bottom: 16px;
+        max-width: calc(100% - 32px);
+        padding: 7px 12px;
+    }
+
+    .zen-pswp .pswp__custom-caption strong { font-size: 13px; }
+    .zen-pswp .pswp__custom-caption span { font-size: 10px; margin-left: 7px; }
 }
 
 @media (max-width: 1200px) { .photo-grid { column-count: 2; } }
@@ -274,28 +207,13 @@ footer { padding: 28px 5px 10px; color: #888; font-size: 12px; }
     <footer>© 2026 He. All rights reserved.</footer>
 </div>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Close photo">×</button>
-    <div class="lightbox-counter" id="lightboxCounter"></div>
+<script type="module">
+import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.js';
 
-    <div class="lightbox-content" id="lightboxContent">
-        <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
-        <img class="lightbox-image" id="lightboxImage" src="" alt="">
-        <button class="lightbox-next" id="lightboxNext" aria-label="Next photo">›</button>
-
-        <div class="lightbox-info">
-            <p class="lightbox-title" id="lightboxTitle"></p>
-            <p class="lightbox-meta" id="lightboxMeta"></p>
-        </div>
-    </div>
-</div>
-
-<script>
 let allPhotos = [];
 let currentFilter = 'all';
-let currentLightboxIndex = 0;
 let visiblePhotos = [];
+let photoElements = [];
 
 const categoryOrder = [
     'portraits',
@@ -306,11 +224,59 @@ const categoryOrder = [
     'furry-friends'
 ];
 
-const lightbox = document.getElementById('lightbox');
-const lightboxImage = document.getElementById('lightboxImage');
-const lightboxTitle = document.getElementById('lightboxTitle');
-const lightboxMeta = document.getElementById('lightboxMeta');
-const lightboxCounter = document.getElementById('lightboxCounter');
+const photoSwipe = new PhotoSwipeLightbox({
+    dataSource: [],
+    bgOpacity: 0.94,
+    showHideAnimationType: 'zoom',
+    showAnimationDuration: 333,
+    hideAnimationDuration: 333,
+    easing: 'cubic-bezier(.4,0,.22,1)',
+    preload: [1, 2],
+    escKey: true,
+    arrowKeys: true,
+    trapFocus: true,
+    returnFocus: true,
+    mainClass: 'zen-pswp',
+    closeTitle: 'Close photo',
+    zoomTitle: 'Zoom photo',
+    arrowPrevTitle: 'Previous photo',
+    arrowNextTitle: 'Next photo',
+    errorMsg: 'The photo could not be loaded',
+    pswpModule: () => import('https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.esm.js')
+});
+
+photoSwipe.addFilter('thumbEl', (thumbEl, itemData, index) => {
+    return photoElements[index] || thumbEl;
+});
+
+photoSwipe.on('uiRegister', () => {
+    photoSwipe.pswp.ui.registerElement({
+        name: 'custom-caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'root',
+        html: '',
+        onInit: (el, pswp) => {
+            pswp.on('change', () => {
+                const photo = visiblePhotos[pswp.currIndex];
+                if (!photo) return;
+
+                el.innerHTML = `<strong>${escapeHtml(photo.title)}</strong><span>${escapeHtml(formatCategory(photo.category))}</span>`;
+            });
+        }
+    });
+});
+
+photoSwipe.init();
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -379,6 +345,7 @@ function updatePhotoCount() {
 function displayPhotos(category) {
     const photoGrid = document.getElementById('photoGrid');
     photoGrid.innerHTML = '';
+    photoElements = [];
 
     visiblePhotos = category === 'all'
         ? allPhotos
@@ -396,6 +363,7 @@ function displayPhotos(category) {
         img.alt = photo.title;
         img.loading = 'lazy';
 
+        photoElements.push(img);
         photoDiv.appendChild(img);
         photoGrid.appendChild(photoDiv);
     });
@@ -414,56 +382,15 @@ function filterPhotos(category, button) {
 function openPhoto(index) {
     if (!visiblePhotos.length) return;
 
-    currentLightboxIndex = index;
-    updateLightbox();
-    lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('lightbox-open');
+    const dataSource = visiblePhotos.map(photo => ({
+        src: photo.path,
+        width: photo.width,
+        height: photo.height,
+        alt: photo.title
+    }));
+
+    photoSwipe.loadAndOpen(index, dataSource);
 }
-
-function closeLightbox() {
-    lightbox.classList.remove('open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('lightbox-open');
-}
-
-function updateLightbox() {
-    const photo = visiblePhotos[currentLightboxIndex];
-
-    lightboxImage.src = photo.path;
-    lightboxImage.alt = photo.title;
-    lightboxTitle.textContent = photo.title;
-    lightboxMeta.textContent = formatCategory(photo.category);
-    lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${visiblePhotos.length}`;
-}
-
-function showNextPhoto() {
-    if (!visiblePhotos.length) return;
-    currentLightboxIndex = (currentLightboxIndex + 1) % visiblePhotos.length;
-    updateLightbox();
-}
-
-function showPreviousPhoto() {
-    if (!visiblePhotos.length) return;
-    currentLightboxIndex = (currentLightboxIndex - 1 + visiblePhotos.length) % visiblePhotos.length;
-    updateLightbox();
-}
-
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxNext').addEventListener('click', showNextPhoto);
-document.getElementById('lightboxPrev').addEventListener('click', showPreviousPhoto);
-
-lightbox.addEventListener('click', event => {
-    if (event.target === lightbox) closeLightbox();
-});
-
-document.addEventListener('keydown', event => {
-    if (!lightbox.classList.contains('open')) return;
-
-    if (event.key === 'Escape') closeLightbox();
-    if (event.key === 'ArrowRight') showNextPhoto();
-    if (event.key === 'ArrowLeft') showPreviousPhoto();
-});
 
 document.addEventListener('DOMContentLoaded', loadPhotos);
 </script>
