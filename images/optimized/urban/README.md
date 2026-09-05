@@ -1,0 +1,1 @@
+Optimized urban photos are generated here automatically.
