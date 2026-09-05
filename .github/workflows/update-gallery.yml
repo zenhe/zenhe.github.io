@@ -6,6 +6,7 @@ on:
       - 'images/**'
       - 'scripts/generate-photos.js'
       - '.github/workflows/update-gallery.yml'
+      - 'index.html'
   workflow_dispatch:
 
 permissions:
@@ -24,6 +25,30 @@ jobs:
         with:
           node-version: 20
 
+      - name: Organise existing images
+        shell: bash
+        run: |
+          mkdir -p images/originals images/optimized
+
+          for category_dir in images/*/; do
+            category=$(basename "$category_dir")
+
+            if [ "$category" = "originals" ] || [ "$category" = "optimized" ]; then
+              continue
+            fi
+
+            mkdir -p "images/originals/$category" "images/optimized/$category"
+
+            find "$category_dir" -maxdepth 1 -type f \( \
+              -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \
+            \) -exec mv -n {} "images/originals/$category/" \;
+
+            find "$category_dir" -maxdepth 1 -type f -iname '*.webp' \
+              -exec mv -n {} "images/optimized/$category/" \;
+
+            rmdir "$category_dir" 2>/dev/null || true
+          done
+
       - name: Install image optimizer
         run: npm install sharp --no-save
 
@@ -41,5 +66,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add images photos.json
-          git commit -m "Auto-optimize gallery images"
+          git commit -m "Auto-organize and optimize gallery images"
           git push
