@@ -1,0 +1,1 @@
+Optimized portrait photos are generated here automatically.
