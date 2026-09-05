@@ -461,19 +461,23 @@ window.addEventListener('load', () => {
         <div class="side">
             <div class="stats card">
                 <div><div class="number" id="photoCount">0</div><div class="label">Photos</div></div>
-                <div><div class="number">10+</div><div class="label">Locations</div></div>
+                <div><div class="number" id="categoryCount">0</div><div class="label">Categories</div></div>
+                <div><div class="number">2018</div><div class="label">Started</div></div>
             </div>
 
             <div class="about card" id="about">
                 <h2>About</h2>
-                <h3>Finding beauty in the ordinary.</h3>
-                <p>Landscapes, nature, cities and the little details that make life interesting.</p>
+                <h3>Photography is how I slow down and pay attention.</h3>
+                <p>I photograph people, places, cities and the small moments that make life interesting.</p>
+                <p>Based in Auckland.</p>
+                <p>Email: hello@example.com<br>Phone: +64 00 000 0000</p>
                 <a href="#gallery" class="button button-dark">View Gallery →</a>
             </div>
 
             <div class="quote card">
-                <p>"Sometimes the best photos aren't planned."</p>
-                <strong>He.</strong>
+                <p>Currently Exploring</p>
+                <h3>Portraits</h3>
+                <p>Exploring people, expressions and the moments in between.</p>
             </div>
         </div>
     </section>
@@ -622,6 +626,8 @@ function createFilters() {
         button.onclick = () => filterPhotos(category, button);
         filters.appendChild(button);
     });
+
+    document.getElementById('categoryCount').textContent = categories.length;
 }
 
 async function loadPhotos() {
