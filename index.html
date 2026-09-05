@@ -215,7 +215,7 @@ nav button:hover {
     color: white;
 }
 
-/* Masonry Gallery Styles */
+/* Masonry Gallery */
 .photo-grid {
     column-count: 3;
     column-gap: 12px;
@@ -227,7 +227,6 @@ nav button:hover {
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease;
-
     break-inside: avoid;
     margin-bottom: 12px;
 }
@@ -300,9 +299,7 @@ footer {
 /* Responsive Design */
 @media (max-width: 1200px) {
     .photo-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 10px;
-        grid-auto-rows: 200px;
+        column-count: 2;
     }
 }
 
@@ -321,14 +318,12 @@ footer {
     }
 
     .photo-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 8px;
-        grid-auto-rows: 150px;
+        column-count: 2;
+        column-gap: 8px;
     }
 
-    .photo:nth-child(4) {
-        grid-column: span 1;
-        grid-row: span 1;
+    .photo {
+        margin-bottom: 8px;
     }
 
     nav div {
@@ -346,14 +341,12 @@ footer {
     }
 
     .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        grid-auto-rows: 120px;
+        column-count: 2;
+        column-gap: 6px;
     }
 
-    .photo:nth-child(4) {
-        grid-column: span 1;
-        grid-row: span 1;
+    .photo {
+        margin-bottom: 6px;
     }
 
     .gallery {
@@ -423,16 +416,16 @@ footer {
     <section class="bottom-grid">
 
         <div class="gallery card" id="gallery">
-            <h2 onclick="filterPhotos('all')">Gallery →</h2>
+            <h2 onclick="filterPhotos('all', this)">Gallery →</h2>
 
             <div class="filters">
-                <button class="active" onclick="filterPhotos('all')">All</button>
-                <button onclick="filterPhotos('portraits')">Portraits</button>
-                <button onclick="filterPhotos('street')">Street</button>
-                <button onclick="filterPhotos('urban')">Urban</button>
-                <button onclick="filterPhotos('landscapes')">Landscapes</button>
-                <button onclick="filterPhotos('travel')">Travel</button>
-                <button onclick="filterPhotos('furry-friends')">Furry Friends</button>
+                <button class="active" onclick="filterPhotos('all', this)">All</button>
+                <button onclick="filterPhotos('portraits', this)">Portraits</button>
+                <button onclick="filterPhotos('street', this)">Street</button>
+                <button onclick="filterPhotos('urban', this)">Urban</button>
+                <button onclick="filterPhotos('landscapes', this)">Landscapes</button>
+                <button onclick="filterPhotos('travel', this)">Travel</button>
+                <button onclick="filterPhotos('furry-friends', this)">Furry Friends</button>
             </div>
 
             <div class="photo-grid" id="photoGrid">
@@ -493,21 +486,25 @@ let currentFilter = 'all';
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-
         [array[i], array[j]] = [array[j], array[i]];
     }
 
     return array;
 }
-    
+
 // Load photos from photos.json
 async function loadPhotos() {
     try {
         const response = await fetch('photos.json');
+
+        if (!response.ok) {
+            throw new Error(`Could not load photos.json (${response.status})`);
+        }
+
         const data = await response.json();
         allPhotos = shuffle([...data.photos]);
         updatePhotoCount();
-        displayPhotos('all');
+        displayPhotos(currentFilter);
     } catch (error) {
         console.error('Error loading photos:', error);
     }
@@ -516,39 +513,50 @@ async function loadPhotos() {
 // Update photo count
 function updatePhotoCount() {
     const photoCount = document.getElementById('photoCount');
-    photoCount.textContent = allPhotos.length + '+';
+    photoCount.textContent = allPhotos.length;
 }
 
 // Display photos based on filter
 function displayPhotos(category) {
     const photoGrid = document.getElementById('photoGrid');
     photoGrid.innerHTML = '';
-    
-    let filteredPhotos = category === 'all' ? allPhotos : allPhotos.filter(photo => photo.category === category);
-    
+
+    const filteredPhotos = category === 'all'
+        ? allPhotos
+        : allPhotos.filter(photo => photo.category === category);
+
     filteredPhotos.forEach((photo, index) => {
         const photoDiv = document.createElement('div');
         photoDiv.className = 'photo';
         photoDiv.setAttribute('data-category', photo.category);
         photoDiv.style.animationDelay = `${index * 50}ms`;
         photoDiv.onclick = () => openPhoto(photo);
-        
+
         const img = document.createElement('img');
         img.src = photo.path;
         img.alt = photo.title;
         img.loading = 'lazy';
-        
+
         photoDiv.appendChild(img);
         photoGrid.appendChild(photoDiv);
     });
 }
 
 // Filter photos
-function filterPhotos(category) {
+function filterPhotos(category, button) {
     currentFilter = category;
+
     const buttons = document.querySelectorAll('.filters button');
     buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+
+    if (button && button.classList.contains('filters')) {
+        return;
+    }
+
+    if (button && button.classList.contains('active') === false) {
+        button.classList.add('active');
+    }
+
     displayPhotos(category);
 }
 
