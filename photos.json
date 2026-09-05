@@ -2,45 +2,45 @@
   "photos": [
     {
       "id": 1,
-      "category": "landscapes",
-      "path": "images/landscapes/L (1).jpg",
-      "title": "Landscape 1"
+      "category": "furry-friends",
+      "path": "images/furry-friends/ff (1).jpg",
+      "title": "ff (1)"
     },
     {
       "id": 2,
-      "category": "travel",
-      "path": "images/travel/Media (5).jpg",
-      "title": "Travel 1"
+      "category": "furry-friends",
+      "path": "images/furry-friends/ff (2).jpg",
+      "title": "ff (2)"
     },
     {
       "id": 3,
-      "category": "travel",
-      "path": "images/travel/Media (6).jpg",
-      "title": "Travel 2"
+      "category": "furry-friends",
+      "path": "images/furry-friends/ff (3).jpg",
+      "title": "ff (3)"
     },
     {
       "id": 4,
-      "category": "travel",
-      "path": "images/travel/Media (7).jpg",
-      "title": "Travel 3"
+      "category": "landscapes",
+      "path": "images/landscapes/L (1).jpg",
+      "title": "L (1)"
     },
     {
       "id": 5,
-      "category": "furry-friends",
-      "path": "images/furry-friends/ff (1).jpg",
-      "title": "Furry Friend 1"
+      "category": "travel",
+      "path": "images/travel/Media (5).jpg",
+      "title": "Media (5)"
     },
     {
       "id": 6,
-      "category": "furry-friends",
-      "path": "images/furry-friends/ff (2).jpg",
-      "title": "Furry Friend 2"
+      "category": "travel",
+      "path": "images/travel/Media (6).jpg",
+      "title": "Media (6)"
     },
     {
       "id": 7,
-      "category": "furry-friends",
-      "path": "images/furry-friends/ff (3).jpg",
-      "title": "Furry Friend 3"
+      "category": "travel",
+      "path": "images/travel/Media (7).jpg",
+      "title": "Media (7)"
     }
   ]
 }
