@@ -1,0 +1,1 @@
+Original urban photos go here (.jpg, .jpeg, .png).
