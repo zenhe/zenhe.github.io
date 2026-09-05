@@ -4,49 +4,65 @@
       "id": 1,
       "category": "furry-friends",
       "path": "images/optimized/furry-friends/ff (1).webp",
-      "title": "ff (1)"
+      "title": "ff (1)",
+      "width": 2000,
+      "height": 1333
     },
     {
       "id": 2,
       "category": "furry-friends",
       "path": "images/optimized/furry-friends/ff (2).webp",
-      "title": "ff (2)"
+      "title": "ff (2)",
+      "width": 2000,
+      "height": 1333
     },
     {
       "id": 3,
       "category": "furry-friends",
       "path": "images/optimized/furry-friends/ff (3).webp",
-      "title": "ff (3)"
+      "title": "ff (3)",
+      "width": 2000,
+      "height": 1333
     },
     {
       "id": 4,
       "category": "landscapes",
       "path": "images/optimized/landscapes/L (1).webp",
-      "title": "L (1)"
+      "title": "L (1)",
+      "width": 1333,
+      "height": 2000
     },
     {
       "id": 5,
       "category": "street",
       "path": "images/optimized/street/DSCF2286.webp",
-      "title": "DSCF2286"
+      "title": "DSCF2286",
+      "width": 1333,
+      "height": 2000
     },
     {
       "id": 6,
       "category": "travel",
       "path": "images/optimized/travel/Media (5).webp",
-      "title": "Media (5)"
+      "title": "Media (5)",
+      "width": 1333,
+      "height": 2000
     },
     {
       "id": 7,
       "category": "travel",
       "path": "images/optimized/travel/Media (6).webp",
-      "title": "Media (6)"
+      "title": "Media (6)",
+      "width": 1333,
+      "height": 2000
     },
     {
       "id": 8,
       "category": "travel",
       "path": "images/optimized/travel/Media (7).webp",
-      "title": "Media (7)"
+      "title": "Media (7)",
+      "width": 2000,
+      "height": 1333
     }
   ]
 }
