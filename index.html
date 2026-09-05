@@ -14,359 +14,63 @@
     --accent: #edae35;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    background: var(--background);
-    color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.container {
-    width: min(1400px, calc(100% - 40px));
-    margin: auto;
-    padding: 20px 0;
-}
-
-nav {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-}
-
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.dot {
-    color: var(--accent);
-}
-
-nav div {
-    display: flex;
-    gap: 25px;
-}
-
-nav button {
-    color: #aaa;
-    background: transparent;
-    border: none;
-    padding: 8px 12px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-nav button:hover {
-    color: white;
-}
-
-.card {
-    background: var(--card);
-    border-radius: 28px;
-    overflow: hidden;
-}
-
-.top-grid {
-    display: grid;
-    grid-template-columns: 2.5fr 1fr;
-    gap: 18px;
-}
-
-.hero {
-    min-height: 400px;
-    padding: 55px;
-    display: flex;
-    align-items: center;
-    background:
-        linear-gradient(90deg, #f8f5ee 0%, #f8f5eedd 48%, transparent),
-        linear-gradient(135deg, #ddd2c5, #747c8c);
-}
-
-.small-title {
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    font-size: 11px;
-    color: var(--muted);
-}
-
-.hero h1 {
-    font-size: 110px;
-    line-height: 0.85;
-    margin: 25px 0;
-    letter-spacing: -8px;
-}
-
-.hero-text {
-    font-size: 27px;
-    margin-bottom: 30px;
-}
-
-.button {
-    display: inline-block;
-    padding: 14px 24px;
-    margin-right: 8px;
-    border: 1px solid #17171a;
-    border-radius: 30px;
-    color: #17171a;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.button-dark {
-    background: #17171a;
-    color: white;
-}
-
-.featured {
-    padding: 30px;
-    background: #fff7e7;
-}
-
-.featured h2 {
-    font-size: 28px;
-    margin-bottom: 5px;
-}
-
-.featured-image {
-    height: 235px;
-    margin-top: 20px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #f0c989, #906d72);
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-}
-
-.featured-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.placeholder {
-    padding: 10px 15px;
-    border-radius: 20px;
-    background: #ffffffcc;
-    font-size: 13px;
-}
-
-.bottom-grid {
-    display: grid;
-    grid-template-columns: 2.2fr 1fr;
-    gap: 18px;
-    margin-top: 18px;
-}
-
-.gallery {
-    padding: 25px;
-}
-
-.gallery h2 {
-    margin-top: 0;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.gallery h2:hover {
-    color: var(--accent);
-}
-
-.filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.filters button {
-    border: 0;
-    padding: 9px 18px;
-    border-radius: 25px;
-    background: #e9e3da;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
-}
-
-.filters button:hover {
-    background: #d9cfc0;
-    transform: translateY(-2px);
-}
-
-.filters button.active {
-    background: #17171a;
-    color: white;
-}
-
-/* Masonry Gallery */
-.photo-grid {
-    column-count: 3;
-    column-gap: 12px;
-}
-
-.photo {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    break-inside: avoid;
-    margin-bottom: 12px;
-}
-
-.photo img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.photo:hover img {
-    transform: scale(1.08);
-}
-
-.photo:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    transform: translateY(-4px);
-}
-
-.side {
-    display: grid;
-    gap: 18px;
-}
-
-.about,
-.stats,
-.quote {
-    padding: 28px;
-}
-
-.stats {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-}
-
-.number {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.label {
-    color: var(--muted);
-}
-
-.about h2 {
-    margin-top: 0;
-}
-
-.about p {
-    color: var(--muted);
-}
-
-.quote {
-    background: linear-gradient(135deg, #292834, #746c72);
-    color: white;
-}
-
-.quote p {
-    font-size: 18px;
-}
-
-footer {
-    padding: 28px 5px 10px;
-    color: #888;
-    font-size: 12px;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .photo-grid {
-        column-count: 2;
-    }
-}
-
-@media (max-width: 850px) {
-    .top-grid,
-    .bottom-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero {
-        padding: 35px;
-    }
-
-    .hero h1 {
-        font-size: 80px;
-    }
-
-    .photo-grid {
-        column-count: 2;
-        column-gap: 8px;
-    }
-
-    .photo {
-        margin-bottom: 8px;
-    }
-
-    nav div {
-        gap: 12px;
-    }
-}
-
-@media (max-width: 500px) {
-    .container {
-        width: calc(100% - 20px);
-    }
-
-    nav div {
-        display: none;
-    }
-
-    .photo-grid {
-        column-count: 2;
-        column-gap: 6px;
-    }
-
-    .photo {
-        margin-bottom: 6px;
-    }
-
-    .gallery {
-        padding: 15px;
-    }
-
-    .filters button {
-        padding: 7px 14px;
-        font-size: 12px;
-    }
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--background); color: var(--text); font-family: Arial, Helvetica, sans-serif; }
+.container { width: min(1400px, calc(100% - 40px)); margin: auto; padding: 20px 0; }
+nav { height: 60px; display: flex; align-items: center; justify-content: space-between; color: white; }
+.logo { font-size: 28px; font-weight: bold; }
+.dot { color: var(--accent); }
+nav div { display: flex; gap: 25px; }
+nav button { color: #aaa; background: transparent; border: none; padding: 8px 12px; font-size: 15px; cursor: pointer; transition: color 0.3s ease; }
+nav button:hover { color: white; }
+.card { background: var(--card); border-radius: 28px; overflow: hidden; }
+.top-grid { display: grid; grid-template-columns: 2.5fr 1fr; gap: 18px; }
+.hero { min-height: 400px; padding: 55px; display: flex; align-items: center; background: linear-gradient(90deg, #f8f5ee 0%, #f8f5eedd 48%, transparent), linear-gradient(135deg, #ddd2c5, #747c8c); }
+.small-title { text-transform: uppercase; letter-spacing: 5px; font-size: 11px; color: var(--muted); }
+.hero h1 { font-size: 110px; line-height: 0.85; margin: 25px 0; letter-spacing: -8px; }
+.hero-text { font-size: 27px; margin-bottom: 30px; }
+.button { display: inline-block; padding: 14px 24px; margin-right: 8px; border: 1px solid #17171a; border-radius: 30px; color: #17171a; text-decoration: none; cursor: pointer; transition: all 0.3s ease; }
+.button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.button-dark { background: #17171a; color: white; }
+.featured { padding: 30px; background: #fff7e7; }
+.featured h2 { font-size: 28px; margin-bottom: 5px; }
+.featured-image { height: 235px; margin-top: 20px; border-radius: 20px; background: linear-gradient(135deg, #f0c989, #906d72); display: grid; place-items: center; overflow: hidden; }
+.featured-image img { width: 100%; height: 100%; object-fit: cover; }
+.placeholder { padding: 10px 15px; border-radius: 20px; background: #ffffffcc; font-size: 13px; }
+.bottom-grid { display: grid; grid-template-columns: 2.2fr 1fr; gap: 18px; margin-top: 18px; }
+.gallery { padding: 25px; }
+.gallery h2 { margin-top: 0; cursor: pointer; transition: color 0.3s ease; }
+.gallery h2:hover { color: var(--accent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.filters button { border: 0; padding: 9px 18px; border-radius: 25px; background: #e9e3da; cursor: pointer; transition: all 0.3s ease; font-size: 14px; }
+.filters button:hover { background: #d9cfc0; transform: translateY(-2px); }
+.filters button.active { background: #17171a; color: white; }
+.photo-grid { column-count: 3; column-gap: 12px; }
+.photo { position: relative; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; break-inside: avoid; margin-bottom: 12px; }
+.photo img { width: 100%; height: auto; display: block; transition: transform 0.3s ease; }
+.photo:hover img { transform: scale(1.08); }
+.photo:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); transform: translateY(-4px); }
+.side { display: grid; gap: 18px; }
+.about, .stats, .quote { padding: 28px; }
+.stats { display: flex; justify-content: space-around; text-align: center; }
+.number { font-size: 30px; font-weight: bold; }
+.label { color: var(--muted); }
+.about h2 { margin-top: 0; }
+.about p { color: var(--muted); }
+.quote { background: linear-gradient(135deg, #292834, #746c72); color: white; }
+.quote p { font-size: 18px; }
+footer { padding: 28px 5px 10px; color: #888; font-size: 12px; }
+@media (max-width: 1200px) { .photo-grid { column-count: 2; } }
+@media (max-width: 850px) { .top-grid, .bottom-grid { grid-template-columns: 1fr; } .hero { padding: 35px; } .hero h1 { font-size: 80px; } .photo-grid { column-count: 2; column-gap: 8px; } .photo { margin-bottom: 8px; } nav div { gap: 12px; } }
+@media (max-width: 500px) { .container { width: calc(100% - 20px); } nav div { display: none; } .photo-grid { column-count: 2; column-gap: 6px; } .photo { margin-bottom: 6px; } .gallery { padding: 15px; } .filters button { padding: 7px 14px; font-size: 12px; } }
 </style>
 </head>
 
 <body>
 <div class="container">
-
     <nav>
         <span class="logo">He<span class="dot">.</span></span>
-
         <div>
             <button onclick="location.hash='home'">Home</button>
             <button onclick="location.hash='gallery'">Gallery</button>
@@ -375,108 +79,54 @@ footer {
     </nav>
 
     <section class="top-grid" id="home">
-
         <div class="hero card">
             <div>
                 <p class="small-title">Photography Portfolio</p>
-
                 <h1>He<span class="dot">.</span></h1>
-
-                <p class="hero-text">
-                    Capturing moments,<br>
-                    one frame at a time.
-                </p>
-
-                <a href="#gallery" class="button button-dark">
-                    View Gallery
-                </a>
-
-                <a href="#about" class="button">
-                    Explore
-                </a>
+                <p class="hero-text">Capturing moments,<br>one frame at a time.</p>
+                <a href="#gallery" class="button button-dark">View Gallery</a>
+                <a href="#about" class="button">Explore</a>
             </div>
         </div>
 
         <div class="featured card">
             <p>✦ Featured</p>
-
             <h2>Golden Hour</h2>
-
             <p>The best light, the best stories.</p>
-
             <div class="featured-image">
-                <span class="placeholder">
-                    Featured image placeholder
-                </span>
+                <span class="placeholder">Featured image placeholder</span>
             </div>
         </div>
-
     </section>
 
     <section class="bottom-grid">
-
         <div class="gallery card" id="gallery">
-            <h2 onclick="filterPhotos('all', this)">Gallery →</h2>
-
-            <div class="filters">
-                <button class="active" onclick="filterPhotos('all', this)">All</button>
-                <button onclick="filterPhotos('portraits', this)">Portraits</button>
-                <button onclick="filterPhotos('street', this)">Street</button>
-                <button onclick="filterPhotos('urban', this)">Urban</button>
-                <button onclick="filterPhotos('landscapes', this)">Landscapes</button>
-                <button onclick="filterPhotos('travel', this)">Travel</button>
-                <button onclick="filterPhotos('furry-friends', this)">Furry Friends</button>
-            </div>
-
-            <div class="photo-grid" id="photoGrid">
-                <!-- Photos will be loaded here by JavaScript -->
-            </div>
+            <h2 onclick="filterPhotos('all')">Gallery →</h2>
+            <div class="filters" id="filters"></div>
+            <div class="photo-grid" id="photoGrid"></div>
         </div>
 
         <div class="side">
-
             <div class="stats card">
-                <div>
-                    <div class="number" id="photoCount">0</div>
-                    <div class="label">Photos</div>
-                </div>
-
-                <div>
-                    <div class="number">10+</div>
-                    <div class="label">Locations</div>
-                </div>
+                <div><div class="number" id="photoCount">0</div><div class="label">Photos</div></div>
+                <div><div class="number">10+</div><div class="label">Locations</div></div>
             </div>
 
             <div class="about card" id="about">
                 <h2>About</h2>
-
                 <h3>Finding beauty in the ordinary.</h3>
-
-                <p>
-                    Landscapes, nature, cities and the little
-                    details that make life interesting.
-                </p>
-
-                <a href="#gallery" class="button button-dark">
-                    View Gallery →
-                </a>
+                <p>Landscapes, nature, cities and the little details that make life interesting.</p>
+                <a href="#gallery" class="button button-dark">View Gallery →</a>
             </div>
 
             <div class="quote card">
-                <p>
-                    "Sometimes the best photos aren't planned."
-                </p>
-
+                <p>"Sometimes the best photos aren't planned."</p>
                 <strong>He.</strong>
             </div>
-
         </div>
     </section>
 
-    <footer>
-        © 2026 He. All rights reserved.
-    </footer>
-
+    <footer>© 2026 He. All rights reserved.</footer>
 </div>
 
 <script>
@@ -488,21 +138,43 @@ function shuffle(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-
     return array;
 }
 
-// Load photos from photos.json
+function formatCategory(category) {
+    return category
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
+function createFilters() {
+    const filters = document.getElementById('filters');
+    filters.innerHTML = '';
+
+    const categories = [...new Set(allPhotos.map(photo => photo.category))].sort();
+    const allButton = document.createElement('button');
+    allButton.textContent = 'All';
+    allButton.className = 'active';
+    allButton.onclick = () => filterPhotos('all', allButton);
+    filters.appendChild(allButton);
+
+    categories.forEach(category => {
+        const button = document.createElement('button');
+        button.textContent = formatCategory(category);
+        button.onclick = () => filterPhotos(category, button);
+        filters.appendChild(button);
+    });
+}
+
 async function loadPhotos() {
     try {
         const response = await fetch('photos.json');
-
-        if (!response.ok) {
-            throw new Error(`Could not load photos.json (${response.status})`);
-        }
+        if (!response.ok) throw new Error(`Could not load photos.json (${response.status})`);
 
         const data = await response.json();
         allPhotos = shuffle([...data.photos]);
+        createFilters();
         updatePhotoCount();
         displayPhotos(currentFilter);
     } catch (error) {
@@ -510,13 +182,14 @@ async function loadPhotos() {
     }
 }
 
-// Update photo count
 function updatePhotoCount() {
     const photoCount = document.getElementById('photoCount');
-    photoCount.textContent = allPhotos.length;
+    const filteredCount = currentFilter === 'all'
+        ? allPhotos.length
+        : allPhotos.filter(photo => photo.category === currentFilter).length;
+    photoCount.textContent = filteredCount;
 }
 
-// Display photos based on filter
 function displayPhotos(category) {
     const photoGrid = document.getElementById('photoGrid');
     photoGrid.innerHTML = '';
@@ -542,31 +215,20 @@ function displayPhotos(category) {
     });
 }
 
-// Filter photos
 function filterPhotos(category, button) {
     currentFilter = category;
 
-    const buttons = document.querySelectorAll('.filters button');
-    buttons.forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.filters button').forEach(btn => btn.classList.remove('active'));
+    if (button) button.classList.add('active');
 
-    if (button && button.classList.contains('filters')) {
-        return;
-    }
-
-    if (button && button.classList.contains('active') === false) {
-        button.classList.add('active');
-    }
-
+    updatePhotoCount();
     displayPhotos(category);
 }
 
-// Open photo (placeholder for future lightbox functionality)
 function openPhoto(photo) {
     console.log('Opened:', photo.title);
-    // Add lightbox functionality here later
 }
 
-// Load photos when page loads
 document.addEventListener('DOMContentLoaded', loadPhotos);
 </script>
 </body>
