@@ -133,6 +133,15 @@ footer { padding: 28px 5px 10px; color: #888; font-size: 12px; }
 let allPhotos = [];
 let currentFilter = 'all';
 
+const categoryOrder = [
+    'portraits',
+    'street',
+    'urban',
+    'landscapes',
+    'travel',
+    'furry-friends'
+];
+
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -152,7 +161,14 @@ function createFilters() {
     const filters = document.getElementById('filters');
     filters.innerHTML = '';
 
-    const categories = [...new Set(allPhotos.map(photo => photo.category))].sort();
+    const availableCategories = new Set(allPhotos.map(photo => photo.category));
+    const categories = [
+        ...categoryOrder.filter(category => availableCategories.has(category)),
+        ...[...availableCategories]
+            .filter(category => !categoryOrder.includes(category))
+            .sort()
+    ];
+
     const allButton = document.createElement('button');
     allButton.textContent = 'All';
     allButton.className = 'active';
