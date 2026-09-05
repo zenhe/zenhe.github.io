@@ -1,0 +1,41 @@
+name: Update photo gallery
+
+on:
+  push:
+    paths:
+      - 'images/**'
+      - 'scripts/generate-photos.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-gallery:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate photos.json
+        run: node scripts/generate-photos.js
+
+      - name: Commit updated photos.json
+        run: |
+          if git diff --quiet -- photos.json; then
+            echo "photos.json is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add photos.json
+          git commit -m "Auto-update photo gallery"
+          git push
