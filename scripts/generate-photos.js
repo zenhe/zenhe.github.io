@@ -77,7 +77,7 @@ async function optimiseImages() {
     }
 }
 
-function scanOptimizedImages() {
+async function scanOptimizedImages() {
     if (!fs.existsSync(optimizedDir)) {
         return [];
     }
@@ -99,11 +99,16 @@ function scanOptimizedImages() {
             .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
         for (const filename of files) {
+            const filePath = path.join(categoryDir, filename);
+            const metadata = await sharp(filePath).metadata();
+
             photos.push({
                 id: photos.length + 1,
                 category,
                 path: `images/optimized/${category}/${filename}`,
-                title: titleFromFilename(filename)
+                title: titleFromFilename(filename),
+                width: metadata.width,
+                height: metadata.height
             });
         }
     }
@@ -114,7 +119,7 @@ function scanOptimizedImages() {
 async function main() {
     await optimiseImages();
 
-    const photos = scanOptimizedImages();
+    const photos = await scanOptimizedImages();
 
     fs.writeFileSync(
         outputFile,
