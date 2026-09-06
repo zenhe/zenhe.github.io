@@ -1,0 +1,83 @@
+name: Deploy PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy-preview:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out PR code
+        uses: actions/checkout@v4
+
+      - name: Prepare preview site
+        run: |
+          mkdir -p preview-site
+          rsync -a --exclude='.git' --exclude='preview-site' ./ preview-site/
+          touch preview-site/.nojekyll
+
+      - name: Publish preview
+        env:
+          PREVIEW_DEPLOY_TOKEN: ${{ secrets.PREVIEW_DEPLOY_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -e
+          test -n "$PREVIEW_DEPLOY_TOKEN"
+          git clone --depth 1 "https://x-access-token:${PREVIEW_DEPLOY_TOKEN}@github.com/zenhe/zenhepreview.git" preview-repo
+          rm -rf "preview-repo/pr-${PR_NUMBER}"
+          mkdir -p "preview-repo/pr-${PR_NUMBER}"
+          rsync -a --delete preview-site/ "preview-repo/pr-${PR_NUMBER}/"
+          cd preview-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "pr-${PR_NUMBER}"
+          if git diff --cached --quiet; then
+            echo "No preview changes to publish."
+          else
+            git commit -m "Deploy preview for PR #${PR_NUMBER}"
+            git push origin main
+          fi
+
+      - name: Comment preview URL on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `https://zenhe.github.io/zenhepreview/pr-${context.issue.number}/`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🚀 **Preview:** ${url}`
+            });
+
+  cleanup-preview:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Remove closed PR preview
+        env:
+          PREVIEW_DEPLOY_TOKEN: ${{ secrets.PREVIEW_DEPLOY_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -e
+          test -n "$PREVIEW_DEPLOY_TOKEN"
+          git clone --depth 1 "https://x-access-token:${PREVIEW_DEPLOY_TOKEN}@github.com/zenhe/zenhepreview.git" preview-repo
+          cd preview-repo
+          rm -rf "pr-${PR_NUMBER}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Preview already removed."
+          else
+            git commit -m "Remove preview for PR #${PR_NUMBER}"
+            git push origin main
+          fi
