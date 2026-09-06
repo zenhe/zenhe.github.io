@@ -1,3 +1,5 @@
+if('scrollRestoration'in history)history.scrollRestoration='manual';const navigationEntry=performance.getEntriesByType('navigation')[0];if(navigationEntry?.type==='reload'&&window.location.hash)history.replaceState(null,'',window.location.pathname+window.location.search);window.addEventListener('load',()=>{if(navigationEntry?.type==='reload')window.scrollTo(0,0)});
+
 import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.js';
 let allPhotos=[],currentFilter='all',visiblePhotos=[];
 const categoryOrder=['portraits','street','urban','landscapes','travel','furry-friends'];
