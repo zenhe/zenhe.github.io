@@ -30,7 +30,7 @@ jobs:
         run: |
           set -e
           test -n "$PREVIEW_DEPLOY_TOKEN"
-          git clone --depth 1 "https://x-access-token:${PREVIEW_DEPLOY_TOKEN}@github.com/zenhe/zenhepreview.git" preview-repo
+          git clone --depth 1 "https://x-access-token:${PREVIEW_DEPLOY_TOKEN}@github.com/zenhe/zenhetest.git" preview-repo
           rm -rf "preview-repo/pr-${PR_NUMBER}"
           mkdir -p "preview-repo/pr-${PR_NUMBER}"
           rsync -a --delete preview-site/ "preview-repo/pr-${PR_NUMBER}/"
@@ -49,7 +49,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const url = `https://zenhe.github.io/zenhepreview/pr-${context.issue.number}/`;
+            const url = `https://zenhe.github.io/zenhetest/pr-${context.issue.number}/`;
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -69,7 +69,7 @@ jobs:
         run: |
           set -e
           test -n "$PREVIEW_DEPLOY_TOKEN"
-          git clone --depth 1 "https://x-access-token:${PREVIEW_DEPLOY_TOKEN}@github.com/zenhe/zenhepreview.git" preview-repo
+          git clone --depth 1 "https://x-access-token:${PREVIEW_DEPLOY_TOKEN}@github.com/zenhe/zenhetest.git" preview-repo
           cd preview-repo
           rm -rf "pr-${PR_NUMBER}"
           git config user.name "github-actions[bot]"
