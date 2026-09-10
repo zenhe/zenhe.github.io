@@ -68,7 +68,7 @@ footer{font-size:11px;line-height:1.5;color:var(--muted);text-align:center;paddi
 <p>A collection of moments, places and perspectives.</p>
 </header>
 <main class="gallery-page">
-<div class="gallery-meta"><h2>All Photos</h2><span class="gallery-count" id="galleryCount">0 Photos</span></div>
+<div class="gallery-meta"><h2 id="galleryTitle">All Photos</h2><span class="gallery-count" id="galleryCount">0 Photos</span></div>
 <div class="filters" id="filters"></div>
 <div class="photo-grid" id="photoGrid"></div>
 </main>
@@ -85,7 +85,7 @@ function formatCategory(c){return c.split('-').map(w=>w.charAt(0).toUpperCase()+
 function createFilters(){const filters=document.getElementById('filters');filters.innerHTML='';const available=new Set(allPhotos.map(p=>p.category)),categories=[...categoryOrder.filter(c=>available.has(c)),...[...available].filter(c=>!categoryOrder.includes(c)).sort()];const all=document.createElement('button');all.textContent='All';all.className='active';all.onclick=()=>filterPhotos('all',all);filters.appendChild(all);categories.forEach(c=>{const b=document.createElement('button');b.textContent=formatCategory(c);b.onclick=()=>filterPhotos(c,b);filters.appendChild(b)})}
 function updateCount(){const count=currentFilter==='all'?allPhotos.length:allPhotos.filter(p=>p.category===currentFilter).length;document.getElementById('galleryCount').textContent=`${count} ${count===1?'Photo':'Photos'}`}
 function displayPhotos(category){const grid=document.getElementById('photoGrid');grid.innerHTML='';visiblePhotos=category==='all'?allPhotos:allPhotos.filter(p=>p.category===category);visiblePhotos.forEach((photo,index)=>{const d=document.createElement('div');d.className='photo';d.onclick=()=>openPhoto(index);const img=document.createElement('img');img.src=photo.path;img.alt=photo.title;img.loading='lazy';d.appendChild(img);grid.appendChild(d)})}
-function filterPhotos(category,button){currentFilter=category;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));if(button)button.classList.add('active');updateCount();displayPhotos(category)}
+function filterPhotos(category,button){currentFilter=category;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));if(button)button.classList.add('active');document.getElementById('galleryTitle').textContent=category==='all'?'All Photos':formatCategory(category);updateCount();displayPhotos(category)}
 function openPhoto(index){if(!visiblePhotos.length)return;photoSwipe.loadAndOpen(index,visiblePhotos.map(p=>({src:p.path,width:Number(p.width),height:Number(p.height),alt:p.title})))}
 async function loadPhotos(){try{const r=await fetch('photos.json');if(!r.ok)throw new Error('Could not load photos.json');const d=await r.json();allPhotos=shuffle([...d.photos]);createFilters();updateCount();displayPhotos(currentFilter)}catch(e){console.error('Error loading photos:',e)}}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
