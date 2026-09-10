@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery | He.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.css">
+<style>
+:root{--background:#f3f1ec;--card:#faf9f6;--text:#171717;--muted:#77736d;--accent:#b98a32;--border:rgba(23,23,26,.1);--serif:"Cormorant Garamond",Georgia,serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--background);color:var(--text);font-family:"Manrope",sans-serif}
+button{font-family:inherit}
+.container{width:min(1400px,calc(100% - 40px));margin:auto;padding:20px 0}
+nav{height:60px;display:flex;align-items:center;justify-content:space-between;color:var(--text)}
+.logo{font-family:var(--serif);font-size:32px;font-weight:600;line-height:1}
+.dot{color:var(--accent)}
+nav div{display:flex;gap:25px}
+nav button{color:var(--muted);background:transparent;border:none;padding:8px 12px;font-size:15px;cursor:pointer;transition:color .3s ease}
+nav button:hover{color:var(--text)}
+.page-header{padding:58px 0 38px;border-bottom:1px solid var(--border)}
+.small-title{text-transform:uppercase;letter-spacing:5px;font-size:11px;color:var(--muted);margin:0 0 16px}
+.page-header h1{font-family:var(--serif);font-size:76px;font-weight:500;line-height:.9;letter-spacing:-3px;margin:0 0 18px}
+.page-header p:last-child{font-family:var(--serif);font-size:27px;line-height:1.08;color:var(--muted);max-width:620px;margin:0}
+.gallery-page{padding:30px 0 20px}
+.gallery-meta{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}
+.gallery-meta h2{font-family:var(--serif);font-size:34px;font-weight:500;margin:0}
+.gallery-count{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:2px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.filters button{border:1px solid var(--border);padding:9px 18px;border-radius:12px;background:#e8e5df;color:var(--text);cursor:pointer;transition:all .3s ease;font-size:14px}
+.filters button:hover{background:#ddd9d1;transform:translateY(-1px)}
+.filters button.active{background:var(--text);color:var(--card);border-color:var(--text)}
+.photo-grid{column-count:3;column-gap:12px}
+.photo{position:relative;border-radius:10px;overflow:hidden;cursor:pointer;transition:all .3s ease;break-inside:avoid;margin-bottom:12px}
+.photo img{width:100%;height:auto;display:block;transition:transform .3s ease}
+.photo:hover img{transform:scale(1.035)}
+.photo:hover{box-shadow:0 6px 20px rgba(0,0,0,.14);transform:translateY(-2px)}
+footer{font-size:11px;line-height:1.5;color:var(--muted);text-align:center;padding:35px 4px 15px}
+.zen-pswp{font-family:"Manrope",sans-serif;--pswp-icon-color:rgba(255,255,255,.92);--pswp-icon-color-secondary:rgba(255,255,255,.45);--pswp-icon-stroke-width:1.5}
+.zen-pswp .pswp__bg{background:rgba(8,8,10,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.zen-pswp .pswp__img{box-shadow:0 24px 80px rgba(0,0,0,.45)}
+.zen-pswp .pswp__button{transition:opacity .2s ease,transform .2s ease}
+.zen-pswp .pswp__button:hover{opacity:1;transform:scale(1.06)}
+.zen-pswp .pswp__counter{color:rgba(255,255,255,.55);font-size:12px;letter-spacing:2px}
+.zen-pswp .pswp__custom-caption{font-family:inherit;display:flex;align-items:center;justify-content:center;position:absolute;left:50%;bottom:24px;transform:translateX(-50%);width:auto;max-width:calc(100% - 40px);padding:8px 16px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(12,12,15,.68);color:white;text-align:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.zen-pswp .pswp__custom-caption span{margin-left:0;color:rgba(255,255,255,.5);font-size:11px;text-transform:uppercase;letter-spacing:2px}
+@media(max-width:1200px){.photo-grid{column-count:2}}
+@media(max-width:850px){.container{width:min(680px,calc(100% - 28px));padding-top:10px}nav{height:54px;margin-bottom:10px}nav div{gap:4px}nav button{padding:7px 9px;font-size:13px}.page-header{padding:42px 0 30px}.page-header h1{font-size:62px}.page-header p:last-child{font-size:24px}.gallery-page{padding-top:24px}.gallery-meta h2{font-size:30px}.filters{flex-wrap:nowrap;overflow-x:auto;margin:0 -2px 20px;padding:2px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.filters button{flex:0 0 auto;padding:8px 15px;font-size:13px}.photo-grid{column-count:2;column-gap:8px}.photo{margin-bottom:8px}}
+@media(max-width:500px){.container{width:calc(100% - 20px);padding-top:6px}nav{height:50px;margin-bottom:8px}.logo{font-size:29px}nav div{gap:0}nav button{padding:6px 7px;font-size:12px}.page-header{padding:34px 0 25px}.small-title{letter-spacing:3px;font-size:9px}.page-header h1{font-size:54px;letter-spacing:-2px}.page-header p:last-child{font-size:21px}.gallery-page{padding-top:20px}.gallery-meta{margin-bottom:14px}.gallery-meta h2{font-size:27px}.photo-grid{column-count:2;column-gap:6px}.photo{margin-bottom:6px}}
+</style>
+</head>
+<body>
+<div class="container">
+<nav>
+<span class="logo">He<span class="dot">.</span></span>
+<div>
+<button onclick="location.href='index.html#home'">Home</button>
+<button onclick="location.href='gallery.html'">Gallery</button>
+<button onclick="location.href='index.html#about'">About</button>
+</div>
+</nav>
+<header class="page-header">
+<p class="small-title">Photography Portfolio</p>
+<h1>Gallery<span class="dot">.</span></h1>
+<p>A collection of moments, places and perspectives.</p>
+</header>
+<main class="gallery-page">
+<div class="gallery-meta"><h2>All Photos</h2><span class="gallery-count" id="galleryCount">0 Photos</span></div>
+<div class="filters" id="filters"></div>
+<div class="photo-grid" id="photoGrid"></div>
+</main>
+<footer>© 2026 He. All rights reserved.</footer>
+</div>
+<script type="module">
+import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.js';
+let allPhotos=[],currentFilter='all',visiblePhotos=[];
+const categoryOrder=['portraits','street','urban','landscapes','travel','furry-friends'];
+const photoSwipe=new PhotoSwipeLightbox({dataSource:[],bgOpacity:.94,showHideAnimationType:'fade',showAnimationDuration:333,hideAnimationDuration:333,easing:'cubic-bezier(.4,0,.22,1)',initialZoomLevel:'fit',secondaryZoomLevel:1,preload:[1,2],escKey:true,arrowKeys:true,trapFocus:true,returnFocus:true,mainClass:'zen-pswp',pswpModule:()=>import('https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.esm.js')});
+photoSwipe.on('uiRegister',()=>{photoSwipe.pswp.ui.registerElement({name:'custom-caption',order:9,isButton:false,appendTo:'root',html:'',onInit:(el,pswp)=>{pswp.on('change',()=>{const photo=visiblePhotos[pswp.currIndex];if(photo)el.innerHTML=`<span>${formatCategory(photo.category)}</span>`})}})});
+photoSwipe.init();
+function formatCategory(c){return c.split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ')}
+function createFilters(){const filters=document.getElementById('filters');filters.innerHTML='';const available=new Set(allPhotos.map(p=>p.category)),categories=[...categoryOrder.filter(c=>available.has(c)),...[...available].filter(c=>!categoryOrder.includes(c)).sort()];const all=document.createElement('button');all.textContent='All';all.className='active';all.onclick=()=>filterPhotos('all',all);filters.appendChild(all);categories.forEach(c=>{const b=document.createElement('button');b.textContent=formatCategory(c);b.onclick=()=>filterPhotos(c,b);filters.appendChild(b)})}
+function updateCount(){const count=currentFilter==='all'?allPhotos.length:allPhotos.filter(p=>p.category===currentFilter).length;document.getElementById('galleryCount').textContent=`${count} ${count===1?'Photo':'Photos'}`}
+function displayPhotos(category){const grid=document.getElementById('photoGrid');grid.innerHTML='';visiblePhotos=category==='all'?allPhotos:allPhotos.filter(p=>p.category===category);visiblePhotos.forEach((photo,index)=>{const d=document.createElement('div');d.className='photo';d.onclick=()=>openPhoto(index);const img=document.createElement('img');img.src=photo.path;img.alt=photo.title;img.loading='lazy';d.appendChild(img);grid.appendChild(d)})}
+function filterPhotos(category,button){currentFilter=category;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));if(button)button.classList.add('active');updateCount();displayPhotos(category)}
+function openPhoto(index){if(!visiblePhotos.length)return;photoSwipe.loadAndOpen(index,visiblePhotos.map(p=>({src:p.path,width:Number(p.width),height:Number(p.height),alt:p.title})))}
+async function loadPhotos(){try{const r=await fetch('photos.json');if(!r.ok)throw new Error('Could not load photos.json');const d=await r.json();allPhotos=shuffle([...d.photos]);createFilters();updateCount();displayPhotos(currentFilter)}catch(e){console.error('Error loading photos:',e)}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+document.addEventListener('DOMContentLoaded',loadPhotos);
+</script>
+</body>
+</html>
