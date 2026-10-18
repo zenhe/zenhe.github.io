@@ -27,13 +27,29 @@
     {
       "id": 4,
       "category": "landscapes",
+      "path": "images/optimized/landscapes/IMG_9439.webp",
+      "title": "IMG 9439",
+      "width": 1333,
+      "height": 2000
+    },
+    {
+      "id": 5,
+      "category": "landscapes",
+      "path": "images/optimized/landscapes/IMG_9440.webp",
+      "title": "IMG 9440",
+      "width": 2000,
+      "height": 1125
+    },
+    {
+      "id": 6,
+      "category": "landscapes",
       "path": "images/optimized/landscapes/L (1).webp",
       "title": "L (1)",
       "width": 1333,
       "height": 2000
     },
     {
-      "id": 5,
+      "id": 7,
       "category": "street",
       "path": "images/optimized/street/DSCF2286.webp",
       "title": "DSCF2286",
@@ -41,7 +57,7 @@
       "height": 2000
     },
     {
-      "id": 6,
+      "id": 8,
       "category": "travel",
       "path": "images/optimized/travel/Media (5).webp",
       "title": "Media (5)",
@@ -49,7 +65,7 @@
       "height": 2000
     },
     {
-      "id": 7,
+      "id": 9,
       "category": "travel",
       "path": "images/optimized/travel/Media (6).webp",
       "title": "Media (6)",
@@ -57,7 +73,7 @@
       "height": 2000
     },
     {
-      "id": 8,
+      "id": 10,
       "category": "travel",
       "path": "images/optimized/travel/Media (7).webp",
       "title": "Media (7)",
